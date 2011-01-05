@@ -8,7 +8,7 @@ use IO::Handle;
 
 
 use vars qw( @ISA $VERSION);
-our $VERSION = '1.0';
+our $VERSION = '1.1';
 
 my @lslv_prop = (
 					"LOGICAL VOLUME:",
@@ -295,7 +295,6 @@ sub _parse_properties
 			$value =~s/^\s+|\s+$//g;
 			$prop{$defp} = $value;
 		} else {
-     		print "The pattern is \Q$defp\E ([^\n]*?) ($str|\n|$)\n";
 			carp "Property $defp not have value. Probably due to inconsistent identifier output\n";
 		}
 	}
@@ -333,9 +332,9 @@ sub _exec_open3
     $reader_h->autoflush();
     $error_h->autoflush();  
     waitpid $pid, 0;
-	my $rc = $? >> 8;
-	carp "Error in executing the command\n" if ($rc);
-	return $result, $error;
+    my $rc = $? >> 8;
+    carp "Error in executing the command\n" if ($rc);
+    return $result, $error;
 }
 
 # Splitter based on pattern
